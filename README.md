@@ -1,6 +1,6 @@
 # WMS-Server
-A server which implements OGC Web Map Service (WMS) by C#
-http://www.opengeospatial.org/standards/wms
+A server which implements OGC Web Map Service (WMS) (http://www.opengeospatial.org/standards/wms) by C#
+
 
 ## 一、什么是WMS
 WMS（Web Map Service，Web地图服务）是OGC（Open GIS Consortium，开放地理信息系统协会）制定的一种能够从地理信息动态生成具有地理空间位置数据的地图图像的服务标准。WMS标准将由地理信息图示表达的“地图”定义为计算机屏幕上显示的数字图像文件，因此WMS产生的地图一般以图像格式提供，如PNG、GIF 或BMP；或按SVG（Scalable Vector Graphics）或WebCGM（Web Computer Graphics Metafile）格式提供基于矢量的图形元素。
