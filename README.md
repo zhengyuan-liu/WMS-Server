@@ -69,11 +69,13 @@ Shapefile成图就是根据读取的Shapefile生成的FeatureClass类绘制成�
 在完成了capability.xml和实现了Shapefile的读取与成图后，剩下的工作就是建立WMS服务器了。WMS服务器（WMSServer命名空间）的类图如下：
  
 图3 WMSServer命名空间类图
+
 将WMS的GetCapability请求和GetMap请求分别抽象为CapabilityRequest类（图4）和MapRequest类（图5），并根据请求字符串完成类的构造。WMS类中实现了GetCapabilityData和GetMap两个静态方法。GetCapability请求的处理和响应比较简单，实际上只需将capability.xml返回即可，WMS类中的GetCapabilityData静态方法就是以UTF8编码的形式返回capability.xml的字节数组。而GetMap请求的处理和响应则比较复杂，下面详细论述。
  
 图4 CapabilityRequest类图
  
 图5 MapRequest类图
+
 GetMap的请求所包含的必选参数如下表所示：
 表 GetMap请求的必选参数
 请求参数	说明
@@ -91,6 +93,7 @@ WMS的GetMap静态方法根据MapRequest对象中的请求参数，调用shp读�
 WMSListener类的主要内容就是一个TcpListener，负责监听浏览器/客户端发出的WMS请求，并通过WMSThreadHandler接收和响应请求，并返回相应内容。WMSThreadHandler的类图如下：
  
 图6 WMSThreadHandler类图
+
 为方便统一处理，WMSThreadHandler类中既包含了一个MapRequest又包含了一个CapabilityRequest。WMSThreadHandler中的GetRequest方法用于获取和解析请求字符串是GetMap还是GetCapability；GetResponceData方法用于从WMS的静态方法中获取返回的数据流，如果是GetCapability则返回capability.xml数据流，如果是GetMap则返回绘制完成的内存图数据流；SendResponce方法用于将GetResponceData得到数据流发送给浏览器或客户端。
 至此，一个基本的WMS服务器就完成了。
 
@@ -98,11 +101,13 @@ WMSListener类的主要内容就是一个TcpListener，负责监听浏览器/客
 使用Gaia作为客户端进行测试。新建一个Web Map Service，在输入WMS名称和URL之后双击新建的WMS，Gaia就向发出服务器发出GetCapability请求（图7），并自动分析WMS支持的图层数据及相应的数据格式和图层样式等（图1）。
  
 图7 服务器接收到的GetCapability请求
+
 添加各数据图层，并选择合适的样式。客户端向服务器端发送GetMap请求，接收服务器返回的指定格式的Bitmap并将其显示在屏幕上。显示了全部图层的北大地图如图9所示。
  
 图8 服务器接收到的GetMap请求
  
 图9 Gaia显示的WMS返回的多图层北大地图
+
 拖动、缩放地图，客户端又向服务器发送了不同参数的GetMap请求，反映了WMS地图生成的动态性。
 
 
