@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WMT_MS_Capabilities version="1.1.1" updateSequence="215">
+  <Service>
+    <Name>OGC:WMS</Name>
+    <Title>Web Map Service</Title>
+    <Abstract>PKU Map</Abstract>
+    <KeywordList>
+      <Keyword>WMS</Keyword>
+    </KeywordList>
+    <ContactInformation>
+      <ContactPersonPrimary>
+        <ContactPerson>Liu Zhengyuan</ContactPerson>
+        <ContactOrganization>Peking University</ContactOrganization>
+      </ContactPersonPrimary>
+      <ContactPosition>Junior</ContactPosition>
+      <ContactAddress>
+        <AddressType>Study</AddressType>
+        <Address/>
+        <City>Beijing</City>
+        <StateOrProvince/>
+        <PostCode/>
+        <Country>China</Country>
+      </ContactAddress>
+      <ContactVoiceTelephone/>
+      <ContactFacsimileTelephone/>
+      <ContactElectronicMailAddress>liuzhengyuan1995@pku.edu.cn</ContactElectronicMailAddress>
+    </ContactInformation>
+    <Fees>NONE</Fees>
+    <AccessConstraints>NONE</AccessConstraints>
+  </Service>
+  <Capability>
+    <Request>
+      <GetCapabilities>
+        <Format>application/vnd.ogc.wms_xml</Format>
+        <DCPType>
+          <HTTP>
+            <Get>
+              <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://localhost:8086/?SERVICE=WMS&amp;"/>
+            </Get>
+            <Post>
+              <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://localhost:8086/?SERVICE=WMS&amp;"/>
+            </Post>
+          </HTTP>
+        </DCPType>
+      </GetCapabilities>
+      <GetMap>
+        <Format>image/png</Format>      
+        <DCPType>
+          <HTTP>
+            <Get>
+              <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://localhost:8086/?SERVICE=WMS&amp;"/>
+            </Get>
+          </HTTP>
+        </DCPType>
+      </GetMap>
+    </Request>
+    <Exception>
+      <Format>application/vnd.ogc.se_xml</Format>
+      <Format>application/vnd.ogc.se_inimage</Format>
+      <Format>application/vnd.ogc.se_blank</Format>
+    </Exception>
+    <UserDefinedSymbolization SupportSLD="1" UserLayer="1" UserStyle="1" RemoteWFS="1"/>
+    <Layer>
+      <Title>Web Map Service</Title>
+      <Abstract>PKU Map</Abstract>
+      <!--All supported EPSG projections:-->    
+      <SRS>EPSG:WGS84(DD)</SRS>                    
+      <SRS>EPSG:4326</SRS>    
+      <LatLonBoundingBox minx="-180.0" miny="-90.0" maxx="180.0" maxy="90.0"/>
+                 
+      <Layer queryable="1" opaque="0">
+        <Name>Road</Name>
+        <Title>Road</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>Road</Keyword>
+        </KeywordList>
+        <SRS>EPSG:4326</SRS>
+        <LatLonBoundingBox minx="116.29850507927827" miny="39.985392079187804" maxx="116.30950407417731" maxy="39.997114566269126"/>
+        <BoundingBox SRS="EPSG:4326" minx="116.29850507927827" miny="39.985392079187804" maxx="116.30950407417731" maxy="39.997114566269126"/>
+        <Style>
+          <Name>line</Name>
+          <Title>Default Line</Title>
+          <Abstract>A sample style that draws a line</Abstract>
+        </Style>
+      </Layer>
+      
+      <Layer queryable="1" opaque="0">
+        <Name>Street</Name>
+        <Title>Street</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>Street</Keyword>
+        </KeywordList>
+        <SRS>EPSG:4326</SRS>
+        <LatLonBoundingBox minx="116.29774463286205" miny="39.984673494806486" maxx="116.31243684548792" maxy="39.99712602955404"/>
+        <BoundingBox SRS="EPSG:4326" minx="116.29774463286205" miny="39.984673494806486" maxx="116.31243684548792" maxy="39.99712602955404"/>
+        <Style>
+          <Name>polygon</Name>
+          <Title>Default Polygon</Title>
+          <Abstract>A sample style that draws a polygon</Abstract>
+        </Style>
+      </Layer>
+      
+      <Layer queryable="1" opaque="0">
+        <Name>Water</Name>
+        <Title>Water</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>Water</Keyword>
+          <Keyword>features</Keyword>
+        </KeywordList>
+        <SRS>EPSG:4326</SRS>
+        <LatLonBoundingBox minx="116.29879403127143" miny="39.99163055968768" maxx="116.30524374382014" maxy="39.99566742699085"/>
+        <BoundingBox SRS="EPSG:4326" minx="116.29879403127143" miny="39.99163055968768" maxx="116.30524374382014" maxy="39.99566742699085"/>
+        <Style>
+          <Name>Red</Name>
+          <Title>Red Polygon</Title>        
+        </Style>
+        <Style>
+          <Name>Green</Name>
+          <Title>Green Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Blue</Name>
+          <Title>Blue Polygon</Title>        
+        </Style>
+        <Style>
+          <Name>Cyan</Name>
+          <Title>Cyan Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Magenta</Name>
+          <Title>Magenta Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Yellow</Name>
+          <Title>Yellow Polygon</Title>
+        </Style>
+      </Layer>
+      
+      <Layer queryable="1" opaque="0">
+        <Name>garden_path</Name>
+        <Title>garden_path</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>garden_path</Keyword>
+        </KeywordList>
+        <SRS>EPSG:4326</SRS>
+        <LatLonBoundingBox minx="116.29849563118036" miny="39.987493380007855" maxx="116.30597347171798" maxy="39.99385589066353"/>
+        <BoundingBox SRS="EPSG:4326" minx="116.29849563118036" miny="39.987493380007855" maxx="116.30597347171798" maxy="39.99385589066353"/>
+        <Style>
+          <Name>line</Name>
+          <Title>Default Line</Title>
+          <Abstract>A sample style that draws a line</Abstract>
+        </Style>
+      </Layer>
+      
+      <Layer queryable="1" opaque="0">
+        <Name>path</Name>
+        <Title>path</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>path</Keyword>
+        </KeywordList>
+        <SRS>EPSG:4326</SRS>
+        <LatLonBoundingBox minx="116.29927096672162" miny="39.98531756638412" maxx="116.30374562537669" maxy="39.98871781580708"/>
+        <BoundingBox SRS="EPSG:4326" minx="116.29927096672162" miny="39.98531756638412" maxx="116.30374562537669" maxy="39.98871781580708"/>
+        <Style>
+          <Name>line</Name>
+          <Title>Default Line</Title>
+          <Abstract>A sample style that draws a line</Abstract>
+        </Style>
+      </Layer>
+      
+      <Layer queryable="1" opaque="0">
+        <Name>playground</Name>
+        <Title>playground</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>playground</Keyword>
+        </KeywordList>
+        <SRS>EPSG:4326</SRS>
+        <LatLonBoundingBox minx="116.30049176932323" miny="39.985506129272686" maxx="116.3083688990838" maxy="39.994914805025246"/>
+        <BoundingBox SRS="EPSG:4326" minx="116.30049176932323" miny="39.985506129272686" maxx="116.3083688990838" maxy="39.994914805025246"/>
+        <Style>
+          <Name>Red</Name>
+          <Title>Red Polygon</Title>        
+        </Style>
+        <Style>
+          <Name>Green</Name>
+          <Title>Green Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Blue</Name>
+          <Title>Blue Polygon</Title>        
+        </Style>
+        <Style>
+          <Name>Cyan</Name>
+          <Title>Cyan Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Magenta</Name>
+          <Title>Magenta Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Yellow</Name>
+          <Title>Yellow Polygon</Title>
+        </Style>
+      </Layer>
+           
+      <Layer queryable="1" opaque="0">
+        <Name>restaurant</Name>
+        <Title>restaurant</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>restaurant</Keyword>
+        </KeywordList>
+        <SRS>EPSG:4326</SRS>
+        <LatLonBoundingBox minx="116.2993106108288" miny="39.98537107907333" maxx="116.30643479511866" maxy="39.99062056991124"/>
+        <BoundingBox SRS="EPSG:4326" minx="116.2993106108288" miny="39.98537107907333" maxx="116.30643479511866" maxy="39.99062056991124"/>
+        <Style>
+          <Name>Red</Name>
+          <Title>Red Polygon</Title>        
+        </Style>
+        <Style>
+          <Name>Green</Name>
+          <Title>Green Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Blue</Name>
+          <Title>Blue Polygon</Title>        
+        </Style>
+        <Style>
+          <Name>Cyan</Name>
+          <Title>Cyan Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Magenta</Name>
+          <Title>Magenta Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Yellow</Name>
+          <Title>Yellow Polygon</Title>
+        </Style>
+      </Layer>
+
+      <Layer queryable="1" opaque="0">
+        <Name>businessbuilding</Name>
+        <Title>businessbuilding</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>businessbuilding</Keyword>
+        </KeywordList>
+        <SRS>EPSG:4326</SRS>
+        <LatLonBoundingBox minx="116.29958477405842" miny="39.985388520290826" maxx="116.31072818652581" maxy="39.99727440390757"/>
+        <BoundingBox SRS="EPSG:4326" minx="116.29958477405842" miny="39.985388520290826" maxx="116.31072818652581" maxy="39.99727440390757"/>
+        <Style>
+          <Name>Red</Name>
+          <Title>Red Polygon</Title>        
+        </Style>
+        <Style>
+          <Name>Green</Name>
+          <Title>Green Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Blue</Name>
+          <Title>Blue Polygon</Title>        
+        </Style>
+        <Style>
+          <Name>Cyan</Name>
+          <Title>Cyan Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Magenta</Name>
+          <Title>Magenta Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Yellow</Name>
+          <Title>Yellow Polygon</Title>
+        </Style>
+      </Layer>
+
+      <Layer queryable="1" opaque="0">
+        <Name>officebuilding</Name>
+        <Title>officebuilding</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>officebuilding</Keyword>
+        </KeywordList>
+        <SRS>EPSG:4326</SRS>
+        <LatLonBoundingBox minx="116.2990164766627" miny="39.98542073837842" maxx="116.31204420284917" maxy="39.99707581819149"/>
+        <BoundingBox SRS="EPSG:4326" minx="116.2990164766627" miny="39.98542073837842" maxx="116.31204420284917" maxy="39.99707581819149"/>
+        <Style>
+          <Name>Red</Name>
+          <Title>Red Polygon</Title>        
+        </Style>
+        <Style>
+          <Name>Green</Name>
+          <Title>Green Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Blue</Name>
+          <Title>Blue Polygon</Title>        
+        </Style>
+        <Style>
+          <Name>Cyan</Name>
+          <Title>Cyan Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Magenta</Name>
+          <Title>Magenta Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Yellow</Name>
+          <Title>Yellow Polygon</Title>
+        </Style>      
+      </Layer>
+
+      <Layer queryable="1" opaque="0">
+        <Name>towel</Name>
+        <Title>towel</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>towel</Keyword>
+        </KeywordList>
+        <SRS>EPSG:4326</SRS>
+        <LatLonBoundingBox minx="116.30563037742915" miny="39.992594520656795" maxx="116.30583037742916" maxy="39.9927945206568"/>
+        <BoundingBox SRS="EPSG:4326" minx="116.30563037742915" miny="39.992594520656795" maxx="116.30583037742916" maxy="39.9927945206568"/>
+        <Style>
+          <Name>point</Name>
+          <Title>Default Point</Title>
+          <Abstract>A sample style that draws a point</Abstract>
+        </Style>
+      </Layer>
+
+      <Layer queryable="1" opaque="0">
+        <Name>dormitory</Name>
+        <Title>dormitory</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>dormitory</Keyword>
+        </KeywordList>
+        <SRS>EPSG:4326</SRS>
+        <LatLonBoundingBox  minx="116.29899671766748" miny="39.985310245231176" maxx="116.30424552035606" maxy="39.99088018692942"/>
+        <BoundingBox SRS="EPSG:4326"  minx="116.29899671766748" miny="39.985310245231176" maxx="116.30424552035606" maxy="39.99088018692942"/>
+        <Style>
+          <Name>Red</Name>
+          <Title>Red Polygon</Title>        
+        </Style>
+        <Style>
+          <Name>Green</Name>
+          <Title>Green Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Blue</Name>
+          <Title>Blue Polygon</Title>        
+        </Style>
+        <Style>
+          <Name>Cyan</Name>
+          <Title>Cyan Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Magenta</Name>
+          <Title>Magenta Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Yellow</Name>
+          <Title>Yellow Polygon</Title>
+        </Style>
+      </Layer>
+
+      <Layer queryable="1" opaque="0">
+        <Name>constructionsite</Name>
+        <Title>constructionsite</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>constructionsite</Keyword>
+        </KeywordList>
+        <SRS>EPSG:4326</SRS>
+        <LatLonBoundingBox  minx="116.30241605529841" miny="39.98608649799263" maxx="116.30919702692688" maxy="39.993783496157334"/>
+        <BoundingBox SRS="EPSG:4326"  minx="116.30241605529841" miny="39.98608649799263" maxx="116.30919702692688" maxy="39.993783496157334"/>
+        <Style>
+          <Name>Red</Name>
+          <Title>Red Polygon</Title>        
+        </Style>
+        <Style>
+          <Name>Green</Name>
+          <Title>Green Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Blue</Name>
+          <Title>Blue Polygon</Title>        
+        </Style>
+        <Style>
+          <Name>Cyan</Name>
+          <Title>Cyan Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Magenta</Name>
+          <Title>Magenta Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Yellow</Name>
+          <Title>Yellow Polygon</Title>
+        </Style>
+      </Layer>
+
+      <Layer queryable="1" opaque="0">
+        <Name>teachingbuilding</Name>
+        <Title>teachingbuilding</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>teachingbuilding</Keyword>
+        </KeywordList>
+        <SRS>EPSG:4326</SRS>
+        <LatLonBoundingBox  minx="116.30241605529841" miny="39.98608649799263" maxx="116.30919702692688" maxy="39.993783496157334"/>
+        <BoundingBox SRS="EPSG:4326"  minx="116.30241605529841" miny="39.98608649799263" maxx="116.30919702692688" maxy="39.993783496157334"/>
+        <Style>
+          <Name>Red</Name>
+          <Title>Red Polygon</Title>        
+        </Style>
+        <Style>
+          <Name>Green</Name>
+          <Title>Green Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Blue</Name>
+          <Title>Blue Polygon</Title>        
+        </Style>
+        <Style>
+          <Name>Cyan</Name>
+          <Title>Cyan Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Magenta</Name>
+          <Title>Magenta Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Yellow</Name>
+          <Title>Yellow Polygon</Title>
+        </Style>
+      </Layer>
+
+      <Layer queryable="1" opaque="0">
+        <Name>scenepoint</Name>
+        <Title>scenepoint</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>scenepoint</Keyword>
+        </KeywordList>
+        <SRS>EPSG:4326</SRS>
+        <LatLonBoundingBox minx="116.29853210819637" miny="39.98709" maxx="116.30572135006301" maxy="39.99353941672467"/>
+        <BoundingBox SRS="EPSG:4326" minx="116.29853210819637" miny="39.98709" maxx="116.30572135006301" maxy="39.99353941672467"/>
+      </Layer>
+
+      <Layer queryable="1" opaque="0">
+        <Name>servicebuilding</Name>
+        <Title>servicebuilding</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>servicebuilding</Keyword>
+        </KeywordList>
+        <SRS>EPSG:4326</SRS>
+        <LatLonBoundingBox  minx="116.30014778397924" miny="39.986832949016275" maxx="116.30412435478729" maxy="39.9882851318626"/>
+        <BoundingBox SRS="EPSG:4326"  minx="116.30014778397924" miny="39.986832949016275" maxx="116.30412435478729" maxy="39.9882851318626"/>
+        <Style>
+          <Name>Red</Name>
+          <Title>Red Polygon</Title>        
+        </Style>
+        <Style>
+          <Name>Green</Name>
+          <Title>Green Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Blue</Name>
+          <Title>Blue Polygon</Title>        
+        </Style>
+        <Style>
+          <Name>Cyan</Name>
+          <Title>Cyan Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Magenta</Name>
+          <Title>Magenta Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Yellow</Name>
+          <Title>Yellow Polygon</Title>
+        </Style>
+      </Layer>
+
+      <Layer queryable="1" opaque="0">
+        <Name>importantbuilding</Name>
+        <Title>importantbuilding</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>importantbuilding</Keyword>
+        </KeywordList>
+        <SRS>EPSG:4326</SRS>
+        <LatLonBoundingBox  minx="116.29943742913065" miny="39.98697830560525" maxx="116.3095283611591" maxy="39.99577938390945"/>
+        <BoundingBox SRS="EPSG:4326"  minx="116.29943742913065" miny="39.98697830560525" maxx="116.3095283611591" maxy="39.99577938390945"/>
+        <Style>
+          <Name>Red</Name>
+          <Title>Red Polygon</Title>        
+        </Style>
+        <Style>
+          <Name>Green</Name>
+          <Title>Green Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Blue</Name>
+          <Title>Blue Polygon</Title>        
+        </Style>
+        <Style>
+          <Name>Cyan</Name>
+          <Title>Cyan Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Magenta</Name>
+          <Title>Magenta Polygon</Title>
+        </Style>
+        <Style>
+          <Name>Yellow</Name>
+          <Title>Yellow Polygon</Title>
+        </Style>
+      </Layer>
+
+      <Layer queryable="1" opaque="0">
+        <Name>gate</Name>
+        <Title>gate</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>gate</Keyword>
+        </KeywordList>
+        <SRS>EPSG:4326</SRS>
+        <LatLonBoundingBox minx="116.29853210819637" miny="39.98534636811834" maxx="116.30954074814078" maxy="39.99332438219488"/>
+        <BoundingBox SRS="EPSG:4326" minx="116.29853210819637" miny="39.98534636811834" maxx="116.30954074814078" maxy="39.99332438219488"/>
+      </Layer>
+      
+    </Layer>
+  </Capability>
+</WMT_MS_Capabilities>
