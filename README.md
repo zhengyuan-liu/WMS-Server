@@ -10,6 +10,7 @@ WMS标准定义了三个基本操作：第一个操作是GetCapabilities，用�
 在实现WMS时，首先要需要根据OGC制定的WMS实现规范写一个capability的xml文档，里面提供了WMS的服务级元数据，包括服务信息内容和要求参数等。在用户向服务器发送GetCapabilities请求时，服务器返回此xml文档，用户通过阅读这个xml文档可以了解到WMS提供了哪些数据、具体实现了规范中的哪些功能等。而诸如Gaia等地图客户端会通过分析capability.xml自动得到提供的图层和实现的格式、样式等（图1）。
  
 图1 Gaia客户端对于capability的分析
+
 capability.xml有两个一级标签，分别是<Service>和<Capability>。其中<Service>标签记录了此WMS服务的名字、关键词等基本信息，同时给出了服务提供人的联系信息，包括所在地、单位、E-mail等，方便用户在需要时与服务提供人联系。
 <Capability>标签是capability.xml的核心内容。标签下有三个主要子标签<Request>、<Exception>和<Layer>。<Request>标签记录了WMS所支持的请求的内容，包括返回的格式和请求URL前缀。<Exception>标签说明了异常的格式。<Layer>标签先记录了WMS整体上支持的坐标系和边界范围（BoundingBox），再详细记录了每个空间数据图层的关键词、坐标系、边界范围、可以选择的样式<style>等。
 
@@ -18,42 +19,50 @@ WMS对于GetMap请求的响应是根据用户所请求的空间数据图层和�
 本文通过实现一个与Shapefile文件相对应的Shapefile类和与Shapefile文件中记录的几何对象相对应的FeatureClass类，实现Shapefile的读取与成图。为了方便统一处理，FeatureClass类包括了点要素类PointFeature、线要素类PolylineFeature和面要素类PolygonFeature的集合（List）。此部分（shp读取命名空间）的类图如下：
  
 图2 shp读取命名空间类图
-1. Shapefile的格式与读取
+
+### 1. Shapefile的格式与读取
 Shapefile是 ESRI 提供的一种矢量数据格式，它没有拓扑信息。一个Shapefile由一组文件组成，其中必要的基本文件包括坐标文件（.shp）、索引文件（.shx）和属性文件（.dbf）三个文件。本文只实现坐标文件（.shp）的读取，根据坐标文件的内容就可以画出Shapefile的图形。
 坐标文件(.shp)用于记录空间坐标信息。它由文件头和实体信息两部分构成。坐标文件的文件头是一个长度固定（100 bytes）的记录段，存储了文件长度、Shapefile文件所记录的几何类型、几何类型的空间范围等基本信息。实体信息记录了几何实体的坐标等信息。
 需要指出的是Shapefile文件中数据的位序有Little（小尾）和big（大尾）之分，二者的区别在于它们字节排列的顺序相反。通常情况下数据的位序都是Little，对于位序为 big 的数据，如果想得到它的真实数值需要将它的位序转换成Little，转换原理就是交换字节的顺序，代码如下：
-/// <summary>
-/// 大尾整数转小尾整数
-/// </summary>
-/// <param name="big">大尾整数</param>
-/// <returns>小尾整数</returns>
-public static int ReverseByte(int big)
-{
-    byte[] bytes = BitConverter.GetBytes(big);
-    ExchangeByte(ref bytes[0], ref bytes[3]);
-    ExchangeByte(ref bytes[1], ref bytes[2]);
-    int little = BitConverter.ToInt32(bytes, 0);
-    return little;
-}
+
+    /// <summary>
+    /// 大尾整数转小尾整数
+    /// </summary>
+    /// <param name="big">大尾整数</param>
+    /// <returns>小尾整数</returns>
+    public static int ReverseByte(int big)
+    {
+        byte[] bytes = BitConverter.GetBytes(big);
+        ExchangeByte(ref bytes[0], ref bytes[3]);
+        ExchangeByte(ref bytes[1], ref bytes[2]);
+        int little = BitConverter.ToInt32(bytes, 0);
+        return little;
+    }
+
 其中ExchangeByte函数的用于交换两个字节的值，代码如下：
-public static void ExchangeByte(ref byte b1, ref byte b2)
-{
-    byte temp;
-    temp = b1;
-    b1 = b2;
-    b2 = temp;
-}
+
+    public static void ExchangeByte(ref byte b1, ref byte b2)
+    {
+        byte temp;
+        temp = b1;
+        b1 = b2;
+        b2 = temp;
+    }
+
 Shapefile文件所支持的几何类型包括点、线、面、多点、多线、多面等，一个Shapefile文件只能记录一种几何类型。对于不同的几何类型，文件头的内容和格式相同，因此读取文件头的代码是一样的。但由于不同的几何类型存储的内容和方式不同，需要各自单独处理。总之按照Shapefile的文件格式和几何类型的存储方式逐个数据读取即可，由于篇幅原因这里不再详细说明。
-2. Shapefile的成图
+
+### 2. Shapefile的成图
 Shapefile成图就是根据读取的Shapefile生成的FeatureClass类绘制成一个Graphic，并通过Graphic生成一个Bitmap（内存图）过程。点要素的绘制可以直接使用Graphic类的DrawRectangle和FillRectangle方法（把点表现为一个小正方形），线要素的绘制可以直接使用Graphic类的DrawLines方法，面要素的绘制可以直接使用Graphic类的DrawPolygon和FillPolygon方法。通过可以使用不同类型的边界，并填充不同的颜色，可以表示不同的style。
 成图的另一个关键问题是坐标变换，即将实际的坐标系（WGS84）转化为像素坐标系。由于对于本文实现的WMS提供的空间数据范围较小（一个北大的范围），所以直接对地理坐标相对于像素坐标系做线性拉伸即可。代码如下：
-public Point GetBMPPoint(BBOX boundarybox, int width, int height)
-{
-    double x = width * (this.x - boundarybox.xmin) / (boundarybox.xmax - boundarybox.xmin);
-    double y = height * (this.y - boundarybox.ymin) / (boundarybox.ymax - boundarybox.ymin);
-    Point bmpPoint = new Point((int)x, height - (int)y);
-    return bmpPoint;
-}
+
+    public Point GetBMPPoint(BBOX boundarybox, int width, int height)
+    {
+        double x = width * (this.x - boundarybox.xmin) / (boundarybox.xmax - boundarybox.xmin);
+        double y = height * (this.y - boundarybox.ymin) / (boundarybox.ymax - boundarybox.ymin);
+        Point bmpPoint = new Point((int)x, height - (int)y);
+        return bmpPoint;
+    }
+
 由于绘制的bitmap的范围（大小，即Width*Height）是根据GetMap请求中的boundarybox确定的，所以坐标范围之外的图形和坐标会落在bitmap范围之外不被绘入bitmap之中，所以无需做额外裁剪处理。
 
 ## 四、WMS服务器的实现
