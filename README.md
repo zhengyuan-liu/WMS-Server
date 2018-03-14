@@ -21,7 +21,7 @@ capability.xml有两个一级标签，分别是<Service>和<Capability>。其中
 WMS对于GetMap请求的响应是根据用户所请求的空间数据图层和地理范围，从空间数据动态生成具有指定地理范围的地图图像。因此如何将空间数据（本文实现的WMS的空间数据格式为Shapefile）渲染成地图图像，即实现Shapefile文件的读取与成图是实现GetMap的关键。
 本文通过实现一个与Shapefile文件相对应的Shapefile类和与Shapefile文件中记录的几何对象相对应的FeatureClass类，实现Shapefile的读取与成图。为了方便统一处理，FeatureClass类包括了点要素类PointFeature、线要素类PolylineFeature和面要素类PolygonFeature的集合（List）。此部分（shp读取命名空间）的类图如下：
 
-![](https://raw.githubusercontent.com/zhengyuan-liu/WMS-Server/master/demo/2.png)
+<img src="https://raw.githubusercontent.com/zhengyuan-liu/WMS-Server/master/demo/2.png" width = "425" height = "200" align=center />
 
 图2 shp读取命名空间类图
 
@@ -92,7 +92,7 @@ Shapefile成图就是根据读取的Shapefile生成的FeatureClass类绘制成�
 <img src="https://raw.githubusercontent.com/zhengyuan-liu/WMS-Server/master/demo/5.png" width = "400" height = "100"/>
 </div>
 
-图5 MapRequest类图
+<p align = "center">图5 MapRequest类图</p>
 
 GetMap的请求所包含的必选参数如下表所示：
 表 GetMap请求的必选参数
