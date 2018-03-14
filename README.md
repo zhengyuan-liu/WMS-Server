@@ -73,7 +73,8 @@ Shapefile成图就是根据读取的Shapefile生成的FeatureClass类绘制成�
 ## 四、WMS服务器的实现
 在完成了capability.xml和实现了Shapefile的读取与成图后，剩下的工作就是建立WMS服务器了。WMS服务器（WMSServer命名空间）的类图如下：
 
-![](https://raw.githubusercontent.com/zhengyuan-liu/WMS-Server/master/demo/3.png)
+<img src="https://raw.githubusercontent.com/zhengyuan-liu/WMS-Server/master/demo/3.png" width = "300" height = "200" align=center />
+![](https://raw.githubusercontent.com/zhengyuan-liu/WMS-Server/master/demo/3.png  =400*400)
 
 图3 WMSServer命名空间类图
 
