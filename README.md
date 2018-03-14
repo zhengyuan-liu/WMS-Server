@@ -21,7 +21,9 @@ capability.xml有两个一级标签，分别是<Service>和<Capability>。其中
 WMS对于GetMap请求的响应是根据用户所请求的空间数据图层和地理范围，从空间数据动态生成具有指定地理范围的地图图像。因此如何将空间数据（本文实现的WMS的空间数据格式为Shapefile）渲染成地图图像，即实现Shapefile文件的读取与成图是实现GetMap的关键。
 本文通过实现一个与Shapefile文件相对应的Shapefile类和与Shapefile文件中记录的几何对象相对应的FeatureClass类，实现Shapefile的读取与成图。为了方便统一处理，FeatureClass类包括了点要素类PointFeature、线要素类PolylineFeature和面要素类PolygonFeature的集合（List）。此部分（shp读取命名空间）的类图如下：
 
-<img src="https://raw.githubusercontent.com/zhengyuan-liu/WMS-Server/master/demo/2.png" width = "425" height = "200" align=center />
+<div  align="center"> 
+<img src="https://raw.githubusercontent.com/zhengyuan-liu/WMS-Server/master/demo/2.png" width = "425" height = "200"/>
+</div>
 
 图2 shp读取命名空间类图
 
@@ -74,7 +76,7 @@ Shapefile成图就是根据读取的Shapefile生成的FeatureClass类绘制成�
 在完成了capability.xml和实现了Shapefile的读取与成图后，剩下的工作就是建立WMS服务器了。WMS服务器（WMSServer命名空间）的类图如下：
 
 <div  align="center"> 
-<img src="https://raw.githubusercontent.com/zhengyuan-liu/WMS-Server/master/demo/3.png" width = "350" height = "250" align=center />
+<img src="https://raw.githubusercontent.com/zhengyuan-liu/WMS-Server/master/demo/3.png" width = "350" height = "250"/>
 </div>
     
 <p align = "center">图3 WMSServer命名空间类图</p>
@@ -110,9 +112,11 @@ MapRequest类的构造函数将请求字符串按上表分解为各个参数，�
 WMS的GetMap静态方法根据MapRequest对象中的请求参数，调用shp读取命名空间中的Shapefile和FeatureClass类，读取请求图层对应的Shapefile并生成一张Bitmap（内存图）。Bitmap的宽和高与请求的Width和Height相同，格式也与请求的Format相同。
 WMSListener类的主要内容就是一个TcpListener，负责监听浏览器/客户端发出的WMS请求，并通过WMSThreadHandler接收和响应请求，并返回相应内容。WMSThreadHandler的类图如下：
 
-![](https://raw.githubusercontent.com/zhengyuan-liu/WMS-Server/master/demo/6.png)
+<div  align="center"> 
+<img src="https://raw.githubusercontent.com/zhengyuan-liu/WMS-Server/master/demo/6.png" width = "425" height = "100"/>
+</div>
 
-图6 WMSThreadHandler类图
+<p align = "center">图6 WMSThreadHandler类图</p>
 
 为方便统一处理，WMSThreadHandler类中既包含了一个MapRequest又包含了一个CapabilityRequest。WMSThreadHandler中的GetRequest方法用于获取和解析请求字符串是GetMap还是GetCapability；GetResponceData方法用于从WMS的静态方法中获取返回的数据流，如果是GetCapability则返回capability.xml数据流，如果是GetMap则返回绘制完成的内存图数据流；SendResponce方法用于将GetResponceData得到数据流发送给浏览器或客户端。
 至此，一个基本的WMS服务器就完成了。
@@ -122,17 +126,17 @@ WMSListener类的主要内容就是一个TcpListener，负责监听浏览器/客
 
 ![](https://raw.githubusercontent.com/zhengyuan-liu/WMS-Server/master/demo/7.png)
 
-图7 服务器接收到的GetCapability请求
+<p align = "center">图7 服务器接收到的GetCapability请求</p>
 
 添加各数据图层，并选择合适的样式。客户端向服务器端发送GetMap请求，接收服务器返回的指定格式的Bitmap并将其显示在屏幕上。显示了全部图层的北大地图如图9所示。
 
 ![](https://raw.githubusercontent.com/zhengyuan-liu/WMS-Server/master/demo/8.png)
 
-图8 服务器接收到的GetMap请求
+<p align = "center">图8 服务器接收到的GetMap请求</p>
 
 ![](https://raw.githubusercontent.com/zhengyuan-liu/WMS-Server/master/demo/9.png)
 
-图9 Gaia显示的WMS返回的多图层北大地图
+<p align = "center">图9 Gaia显示的WMS返回的多图层北大地图</p>
 
 拖动、缩放地图，客户端又向服务器发送了不同参数的GetMap请求，反映了WMS地图生成的动态性。
 
