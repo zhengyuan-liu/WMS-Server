@@ -10,7 +10,9 @@ WMS标准定义了三个基本操作：第一个操作是GetCapabilities，用�
 ## 二、WMS的capability.xml
 在实现WMS时，首先要需要根据OGC制定的WMS实现规范写一个capability的xml文档，里面提供了WMS的服务级元数据，包括服务信息内容和要求参数等。在用户向服务器发送GetCapabilities请求时，服务器返回此xml文档，用户通过阅读这个xml文档可以了解到WMS提供了哪些数据、具体实现了规范中的哪些功能等。而诸如Gaia等地图客户端会通过分析capability.xml自动得到提供的图层和实现的格式、样式等（图1）。
 
-![](https://raw.githubusercontent.com/zhengyuan-liu/WMS-Server/master/demo/1.png)
+<div  align="center"> 
+<img src="https://raw.githubusercontent.com/zhengyuan-liu/WMS-Server/master/demo/1.png"/>
+</div>
 
 <p align = "center">图1 Gaia客户端对于capability的分析</p>
 
@@ -97,10 +99,14 @@ Shapefile成图就是根据读取的Shapefile生成的FeatureClass类绘制成�
 <p align = "center">图5 MapRequest依赖项关系图</p>
 
 GetMap的请求所包含的必选参数如下表所示：
-表| GetMap请求的必选参数
-请求参数|	说明
-VERSION= 1.3.0|	请求版本.
-REQUEST=GetMap|	请求名称.
+
+表 GetMap请求的必选参数
+
+| 请求参数 | 说明 |
+| - | - | - |
+| VERSION= 1.3.0 | 请求版本. |
+| REQUEST=GetMap | 请求名称. |
+
 LAYERS=layer_list|	以逗号隔开的一个或多个图层列表。
 STYLES=style_list|	以逗号隔开的请求图层的一个渲染样式的列表。
 CRS=namespace:identifier|	空间参照系。
