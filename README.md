@@ -73,10 +73,12 @@ Shapefile成图就是根据读取的Shapefile生成的FeatureClass类绘制成�
 ## 四、WMS服务器的实现
 在完成了capability.xml和实现了Shapefile的读取与成图后，剩下的工作就是建立WMS服务器了。WMS服务器（WMSServer命名空间）的类图如下：
 
-<img src="https://raw.githubusercontent.com/zhengyuan-liu/WMS-Server/master/demo/3.png" width = "300" height = "200" align=center />
-![](https://raw.githubusercontent.com/zhengyuan-liu/WMS-Server/master/demo/3.png  =400*400)
-
+<div  align="center"> 
+<img src="https://raw.githubusercontent.com/zhengyuan-liu/WMS-Server/master/demo/3.png" width = "350" height = "250" align=center />
+</div>
+    
 图3 WMSServer命名空间类图
+
 
 将WMS的GetCapability请求和GetMap请求分别抽象为CapabilityRequest类（图4）和MapRequest类（图5），并根据请求字符串完成类的构造。WMS类中实现了GetCapabilityData和GetMap两个静态方法。GetCapability请求的处理和响应比较简单，实际上只需将capability.xml返回即可，WMS类中的GetCapabilityData静态方法就是以UTF8编码的形式返回capability.xml的字节数组。而GetMap请求的处理和响应则比较复杂，下面详细论述。
 
