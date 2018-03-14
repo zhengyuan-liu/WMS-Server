@@ -12,20 +12,20 @@ WMS标准定义了三个基本操作：第一个操作是GetCapabilities，用�
 
 ![](https://raw.githubusercontent.com/zhengyuan-liu/WMS-Server/master/demo/1.png)
 
-图1 Gaia客户端对于capability的分析
+<p align = "center">图1 Gaia客户端对于capability的分析</p>
 
 capability.xml有两个一级标签，分别是<Service>和<Capability>。其中<Service>标签记录了此WMS服务的名字、关键词等基本信息，同时给出了服务提供人的联系信息，包括所在地、单位、E-mail等，方便用户在需要时与服务提供人联系。
 <Capability>标签是capability.xml的核心内容。标签下有三个主要子标签<Request>、<Exception>和<Layer>。<Request>标签记录了WMS所支持的请求的内容，包括返回的格式和请求URL前缀。<Exception>标签说明了异常的格式。<Layer>标签先记录了WMS整体上支持的坐标系和边界范围（BoundingBox），再详细记录了每个空间数据图层的关键词、坐标系、边界范围、可以选择的样式<style>等。
 
 ## 三、Shapefile的读取与成图
 WMS对于GetMap请求的响应是根据用户所请求的空间数据图层和地理范围，从空间数据动态生成具有指定地理范围的地图图像。因此如何将空间数据（本文实现的WMS的空间数据格式为Shapefile）渲染成地图图像，即实现Shapefile文件的读取与成图是实现GetMap的关键。
-本文通过实现一个与Shapefile文件相对应的Shapefile类和与Shapefile文件中记录的几何对象相对应的FeatureClass类，实现Shapefile的读取与成图。为了方便统一处理，FeatureClass类包括了点要素类PointFeature、线要素类PolylineFeature和面要素类PolygonFeature的集合（List）。此部分（shp读取命名空间）的类图如下：
+本文通过实现一个与Shapefile文件相对应的Shapefile类和与Shapefile文件中记录的几何对象相对应的FeatureClass类，实现Shapefile的读取与成图。为了方便统一处理，FeatureClass类包括了点要素类PointFeature、线要素类PolylineFeature和面要素类PolygonFeature的集合（List）。此部分（shp读取命名空间）的依赖项关系图如下：
 
 <div  align="center"> 
 <img src="https://raw.githubusercontent.com/zhengyuan-liu/WMS-Server/master/demo/2.png" width = "425" height = "200"/>
 </div>
 
-图2 shp读取命名空间类图
+<p align = "center">图2 shp读取命名空间依赖项关系图</p>
 
 ### 1. Shapefile的格式与读取
 Shapefile是 ESRI 提供的一种矢量数据格式，它没有拓扑信息。一个Shapefile由一组文件组成，其中必要的基本文件包括坐标文件（.shp）、索引文件（.shx）和属性文件（.dbf）三个文件。本文只实现坐标文件（.shp）的读取，根据坐标文件的内容就可以画出Shapefile的图形。
@@ -73,13 +73,13 @@ Shapefile成图就是根据读取的Shapefile生成的FeatureClass类绘制成�
 由于绘制的bitmap的范围（大小，即Width*Height）是根据GetMap请求中的boundarybox确定的，所以坐标范围之外的图形和坐标会落在bitmap范围之外不被绘入bitmap之中，所以无需做额外裁剪处理。
 
 ## 四、WMS服务器的实现
-在完成了capability.xml和实现了Shapefile的读取与成图后，剩下的工作就是建立WMS服务器了。WMS服务器（WMSServer命名空间）的类图如下：
+在完成了capability.xml和实现了Shapefile的读取与成图后，剩下的工作就是建立WMS服务器了。WMS服务器（WMSServer命名空间）的依赖项关系图如下：
 
 <div  align="center"> 
 <img src="https://raw.githubusercontent.com/zhengyuan-liu/WMS-Server/master/demo/3.png" width = "350" height = "250"/>
 </div>
     
-<p align = "center">图3 WMSServer命名空间类图</p>
+<p align = "center">图3 WMSServer命名空间依赖项关系图</p>
 
 
 将WMS的GetCapability请求和GetMap请求分别抽象为CapabilityRequest类（图4）和MapRequest类（图5），并根据请求字符串完成类的构造。WMS类中实现了GetCapabilityData和GetMap两个静态方法。GetCapability请求的处理和响应比较简单，实际上只需将capability.xml返回即可，WMS类中的GetCapabilityData静态方法就是以UTF8编码的形式返回capability.xml的字节数组。而GetMap请求的处理和响应则比较复杂，下面详细论述。
@@ -88,35 +88,36 @@ Shapefile成图就是根据读取的Shapefile生成的FeatureClass类绘制成�
 <img src="https://raw.githubusercontent.com/zhengyuan-liu/WMS-Server/master/demo/4.png" width = "400" height = "250"/>
 </div>
 
-<p align = "center">图4 CapabilityRequest类图</p>
+<p align = "center">图4 CapabilityRequest依赖项关系图</p>
 
 <div  align="center"> 
 <img src="https://raw.githubusercontent.com/zhengyuan-liu/WMS-Server/master/demo/5.png" width = "400" height = "100"/>
 </div>
 
-<p align = "center">图5 MapRequest类图</p>
+<p align = "center">图5 MapRequest依赖项关系图</p>
 
 GetMap的请求所包含的必选参数如下表所示：
-表 GetMap请求的必选参数
-请求参数	说明
-VERSION= 1.3.0	请求版本.
-REQUEST=GetMap	请求名称.
-LAYERS=layer_list	以逗号隔开的一个或多个图层列表。
-STYLES=style_list	以逗号隔开的请求图层的一个渲染样式的列表。
-CRS=namespace:identifier	空间参照系。
-BBOX=minx,miny,maxx,maxy	以CRS单位表示的边框边角 (左下角，右上角)。
-WIDTH=output_width	以像元表示的地图图像宽度。.
-HEIGHT=output_height	以像元表示的地图图像高度。
-FORMAT=output_format	地图输出格式。.
+表| GetMap请求的必选参数
+请求参数|	说明
+VERSION= 1.3.0|	请求版本.
+REQUEST=GetMap|	请求名称.
+LAYERS=layer_list|	以逗号隔开的一个或多个图层列表。
+STYLES=style_list|	以逗号隔开的请求图层的一个渲染样式的列表。
+CRS=namespace:identifier|	空间参照系。
+BBOX=minx,miny,maxx,maxy|	以CRS单位表示的边框边角 (左下角，右上角)。
+WIDTH=output_width|	以像元表示的地图图像宽度。.
+HEIGHT=output_height|	以像元表示的地图图像高度。
+FORMAT=output_format|	地图输出格式。.
+
 MapRequest类的构造函数将请求字符串按上表分解为各个参数，完成MapRequest类的构造。
 WMS的GetMap静态方法根据MapRequest对象中的请求参数，调用shp读取命名空间中的Shapefile和FeatureClass类，读取请求图层对应的Shapefile并生成一张Bitmap（内存图）。Bitmap的宽和高与请求的Width和Height相同，格式也与请求的Format相同。
-WMSListener类的主要内容就是一个TcpListener，负责监听浏览器/客户端发出的WMS请求，并通过WMSThreadHandler接收和响应请求，并返回相应内容。WMSThreadHandler的类图如下：
+WMSListener类的主要内容就是一个TcpListener，负责监听浏览器/客户端发出的WMS请求，并通过WMSThreadHandler接收和响应请求，并返回相应内容。WMSThreadHandler的依赖项关系图如下：
 
 <div  align="center"> 
 <img src="https://raw.githubusercontent.com/zhengyuan-liu/WMS-Server/master/demo/6.png" width = "425" height = "100"/>
 </div>
 
-<p align = "center">图6 WMSThreadHandler类图</p>
+<p align = "center">图6 WMSThreadHandler依赖项关系图</p>
 
 为方便统一处理，WMSThreadHandler类中既包含了一个MapRequest又包含了一个CapabilityRequest。WMSThreadHandler中的GetRequest方法用于获取和解析请求字符串是GetMap还是GetCapability；GetResponceData方法用于从WMS的静态方法中获取返回的数据流，如果是GetCapability则返回capability.xml数据流，如果是GetMap则返回绘制完成的内存图数据流；SendResponce方法用于将GetResponceData得到数据流发送给浏览器或客户端。
 至此，一个基本的WMS服务器就完成了。
