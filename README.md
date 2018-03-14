@@ -98,7 +98,7 @@ WMSListener类的主要内容就是一个TcpListener，负责监听浏览器/客
 为方便统一处理，WMSThreadHandler类中既包含了一个MapRequest又包含了一个CapabilityRequest。WMSThreadHandler中的GetRequest方法用于获取和解析请求字符串是GetMap还是GetCapability；GetResponceData方法用于从WMS的静态方法中获取返回的数据流，如果是GetCapability则返回capability.xml数据流，如果是GetMap则返回绘制完成的内存图数据流；SendResponce方法用于将GetResponceData得到数据流发送给浏览器或客户端。
 至此，一个基本的WMS服务器就完成了。
 
-## 五、WMS服务器的实测
+## 五、WMS服务器的测试
 使用Gaia作为客户端进行测试。新建一个Web Map Service，在输入WMS名称和URL之后双击新建的WMS，Gaia就向发出服务器发出GetCapability请求（图7），并自动分析WMS支持的图层数据及相应的数据格式和图层样式等（图1）。
  
 图7 服务器接收到的GetCapability请求
