@@ -101,19 +101,18 @@ Shapefile成图就是根据读取的Shapefile生成的FeatureClass类绘制成�
 GetMap的请求所包含的必选参数如下表所示：
 
 表 GetMap请求的必选参数
-
-| 请求参数 | 说明 |
-| - | - | - |
-| VERSION= 1.3.0 | 请求版本. |
-| REQUEST=GetMap | 请求名称. |
-
-LAYERS=layer_list|	以逗号隔开的一个或多个图层列表。
-STYLES=style_list|	以逗号隔开的请求图层的一个渲染样式的列表。
-CRS=namespace:identifier|	空间参照系。
-BBOX=minx,miny,maxx,maxy|	以CRS单位表示的边框边角 (左下角，右上角)。
-WIDTH=output_width|	以像元表示的地图图像宽度。.
-HEIGHT=output_height|	以像元表示的地图图像高度。
-FORMAT=output_format|	地图输出格式。.
+<table>
+<tr><th>请求参数</th><th>说明</th></tr>
+<tr><td>VERSION= 1.3.0</td><td>请求版本</td></tr>
+<tr><td>REQUEST=GetMap</td><td>请求名称</td></tr>
+<tr><td>LAYERS=layer_list</td><td>以逗号隔开的一个或多个图层列表。</td></tr>
+<tr><td>STYLES=style_list</td><td>以逗号隔开的请求图层的一个渲染样式的列表。</td></tr>
+<tr><td>CRS=namespace:identifier</td><td>空间参照系。</td></tr>
+<tr><td>BBOX=minx,miny,maxx,maxy</td><td>以CRS单位表示的边框边角 (左下角，右上角)。</td></tr>
+<tr><td>WIDTH=output_width</td><td>以像元表示的地图图像宽度。</td></tr>
+<tr><td>HEIGHT=output_height</td><td>以像元表示的地图图像高度。</td></tr>
+<tr><td>FORMAT=output_format</td><td>地图输出格式。</td></tr>
+</table>
 
 MapRequest类的构造函数将请求字符串按上表分解为各个参数，完成MapRequest类的构造。
 WMS的GetMap静态方法根据MapRequest对象中的请求参数，调用shp读取命名空间中的Shapefile和FeatureClass类，读取请求图层对应的Shapefile并生成一张Bitmap（内存图）。Bitmap的宽和高与请求的Width和Height相同，格式也与请求的Format相同。
